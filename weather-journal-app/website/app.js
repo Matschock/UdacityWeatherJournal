@@ -1,36 +1,36 @@
 /* Global Variables */
 // Personal API Key for OpenWeatherMap API
-const apiKey = '&appid=d447d3d87b60bb09c3b42f23c3d2d799&units=imperial';
-const baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
+const myApiKey = '&appid=d447d3d87b60bb09c3b42f23c3d2d799&units=imperial';
+const URLfoundation = 'https://api.openweathermap.org/data/2.5/weather?zip=';
 const countryCode = ',de';
 
 
 //Declare Variable
-let d = new Date();
+let date = new Date();
 
 // Event listener for generate
-document.getElementById('generate').addEventListener('click', performAction);
+document.getElementById('generate').addEventListener('click', doStuff);
 
 // Callback function performAction
-function performAction(event){
+function doStuff(event){
     // get entered zip code
     const zip = document.getElementById('zip').value;
     // get entered user response
     const userResponse = document.getElementById('feelings').value;
     // Create a new date instance dynamically with JS
-    let newDate = d.getMonth()+1+'.'+ d.getDate()+'.'+ d.getFullYear();
+    let fullDate = date.getMonth()+1+'.'+ date.getDate()+'.'+ date.getFullYear();
     // call OpenWeatherMap
-    getWeatherData(baseURL+zip+countryCode+apiKey)
+    getTempData(URLfoundation+zip+countryCode+myApiKey)
     .then(function(temperatureC){
         // Add data to POST requrest
-        postData('/addData',{temperature: temperatureC, date: newDate, userResponse: userResponse});
+        postStuff('/addToSource',{temperature: temperatureC, date: fullDate, userResponse: userResponse});
         // Update website!
-        updateUI();
+        updateWebsite();
     })
 }
 
 // Function to ask for data from OpenWeatherMap
-const getWeatherData = async (url) => {
+const getTempData = async (url) => {
     const res = await fetch(url);
     try{
         const data = await res.json();
@@ -43,7 +43,7 @@ const getWeatherData = async (url) => {
     }
 }
 
-const postData = async (url = '', data = {}) => {
+const postStuff = async (url = '', data = {}) => {
     const res = await fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         credentials: 'same-origin', // include, *same-origin, omit
@@ -53,15 +53,15 @@ const postData = async (url = '', data = {}) => {
         body: JSON.stringify(data), // body data type must match "Content-Type" of headers
     });
     try {
-        const newData = await res.json();
-        return newData;
+        const newStuff = await res.json();
+        return newStuff;
     } catch(error) {
         console.log("error", error);
     }
 }
 
-const updateUI = async () => {
-    const request = await fetch('/all');
+const updateWebsite = async () => {
+    const request = await fetch('/source');
     try{
         const allData = await request.json();
         const lastIndex = allData.length - 1;

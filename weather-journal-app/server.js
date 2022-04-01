@@ -33,14 +33,14 @@ function listening(){
 }
 
 /* GET route */
-app.get('/all', getData);
+app.get('/source', getData);
 
 function getData(req, res){
     res.send(projectData);
 }
 
 /* POST route*/
-app.post('/addData', addWeatherEntry);
+app.post('/addToSource', addWeatherEntry);
 
 function addWeatherEntry(req, res){
     newEntry = {
