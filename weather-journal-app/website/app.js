@@ -4,7 +4,6 @@ const myApiKey = '&appid=d447d3d87b60bb09c3b42f23c3d2d799&units=imperial';
 const URLfoundation = 'https://api.openweathermap.org/data/2.5/weather?zip=';
 const countryCode = ',de';
 
-
 //Declare Variable
 let date = new Date();
 
